@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import HorizontalView from "./Cards/HorizontalView";
+import HorizontalView from "./Views/HorizontalView";
 
 const FeaturedRow = ({ label, disabled, render }) => {
   return (
