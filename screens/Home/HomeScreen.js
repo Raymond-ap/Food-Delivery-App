@@ -1,17 +1,19 @@
 import React from "react";
-import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, SafeAreaView, TouchableOpacity, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
-import { FeaturedRow } from "../../components";
+import { FeaturedRow, HorizontalView } from "../../components";
 
 
 const HomeScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Header />
-      <FeaturedRow label={"top related"} />
-      <FeaturedRow label={"new on foodIn"} />
-      <FeaturedRow label={"all restaurant on foodIn"} disabled />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <FeaturedRow label={"top related"} render={<HorizontalView/>} />
+        <FeaturedRow label={"new on foodIn"} render={<HorizontalView/>} />
+        <FeaturedRow label={"all restaurant on foodIn"} disabled />
+      </ScrollView>
       <StatusBar style="dark" translucent={false} backgroundColor={"#fff"} />
     </SafeAreaView>
   );
