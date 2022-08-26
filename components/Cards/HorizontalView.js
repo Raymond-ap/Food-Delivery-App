@@ -37,7 +37,7 @@ const CardItem = () => {
         <View className="absolute bottom-2 right-2">
           <View className="bg-white py-2 px-4 items-center justify-center rounded-full shadow-xl">
             <Text className="text-sm tracking-widest font-semibold">
-              20 - 24{" "}
+              20 - 24 mins
             </Text>
           </View>
         </View>
