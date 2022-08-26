@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { FeaturedRow, Header, HorizontalView } from "../../components";
+import { FeaturedRow, Header, HorizontalView, VerticalView } from "../../components";
 
 
 const HomeScreen = () => {
@@ -11,7 +11,7 @@ const HomeScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <FeaturedRow label={"top related"} render={<HorizontalView/>} />
         <FeaturedRow label={"new on foodIn"} render={<HorizontalView/>} />
-        <FeaturedRow label={"all restaurant on foodIn"} disabled />
+        <FeaturedRow label={"all restaurant on foodIn"} disabled render={<VerticalView/>} />
       </ScrollView>
       <StatusBar style="dark" translucent={false} backgroundColor={"#fff"} />
     </SafeAreaView>
