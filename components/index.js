@@ -1,5 +1,7 @@
 import FeaturedRow from './FeaturedRow'
+import HorizontalView from './Cards/HorizontalView'
 
 export {
-    FeaturedRow
+    FeaturedRow,
+    HorizontalView
 }
