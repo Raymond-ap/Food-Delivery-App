@@ -18,7 +18,7 @@ const TabNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Restuarant") {
+          if (route.name === "restaurant") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
@@ -51,7 +51,7 @@ const TabNavigator = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Restuarant" component={HomeScreen} />
+      <Tab.Screen name="restaurant" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Order" component={OrderScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
