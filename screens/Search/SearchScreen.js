@@ -3,8 +3,6 @@ import React from 'react'
 import { StatusBar } from "expo-status-bar";
 import { Header } from '../../components'
 
-
-
 const SearchScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">

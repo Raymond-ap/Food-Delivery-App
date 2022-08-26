@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { FeaturedRow, Header, HorizontalView, VerticalView } from "../../components";
 
-
 const HomeScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
