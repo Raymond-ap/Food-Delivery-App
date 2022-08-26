@@ -1,11 +1,15 @@
 import React from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HomeScreen, OrderScreen, SearchScreen, ProfileScreen } from "../screens";
+import {
+  HomeScreen,
+  OrderScreen,
+  SearchScreen,
+  ProfileScreen,
+} from "../screens";
 
 import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
-
 
 const TabNavigator = () => {
   return (
@@ -14,20 +18,16 @@ const TabNavigator = () => {
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Home") {
+          if (route.name === "Restuarant") {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
           } else if (route.name === "Order") {
-            iconName = focused
-              ? "receipt"
-              : "receipt-outline";
+            iconName = focused ? "receipt" : "receipt-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "md-person" : "md-person-outline";
           }
-          return (
-            <Ionicons name={iconName} size={20} color={color} />
-          );
+          return <Ionicons name={iconName} size={20} color={color} />;
         },
         tabBarHideOnKeyboard: true,
         tabBarActiveTintColor: "#1f2937",
@@ -35,7 +35,7 @@ const TabNavigator = () => {
         tabBarStyle: {
           backgroundColor: "#fff",
           borderTopColor: "transparent",
-          height: 65,
+          height: 60,
           paddingTop: 10,
           paddingBottom: 10,
           paddingLeft: 10,
@@ -47,11 +47,11 @@ const TabNavigator = () => {
         tabBarLabelStyle: {
           fontSize: 13,
         },
-        // tabBarShowLabel: false,
+        tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Restuarant" component={HomeScreen} />
       <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="Order" component={OrderScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
