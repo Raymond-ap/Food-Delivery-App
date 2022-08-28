@@ -15,17 +15,23 @@ const VerticalView = () => {
 
 const CardItem = () => {
   return (
-    <TouchableOpacity activeOpacity={0.8} className="w-full mb-2">
-      <ImageBackground className="h-32 w-full  relative bg-blue-400  rounded-lg shadow-md">
+    <TouchableOpacity activeOpacity={1} className="w-full mb-2">
+      <ImageBackground
+        imageStyle={{ borderRadius: 10 }}
+        source={{
+          uri: "https://media-cdn.tripadvisor.com/media/photo-s/1b/99/44/8e/kfc-faxafeni.jpg",
+        }}
+        className="h-32 w-full relative"
+      >
         <View className="absolute top-2 left-2">
-          <View className="bg-white ite py-1 px-2 items-center justify-center rounded-full shadow-xl">
+          <View className="bg-white ite py-1 px-2 items-center justify-center rounded-full shadow-sm">
             <Text className="text-sm tracking-widest font-semibold text-red-500">
               -30%
             </Text>
           </View>
         </View>
         <View className="absolute bottom-2 right-2">
-          <View className="bg-white py-2 px-4 items-center justify-center rounded-full shadow-xl">
+          <View className="bg-white py-2 px-4 items-center justify-center rounded-full shadow-sm">
             <Text className="text-sm tracking-widest font-semibold">
               20 - 24 mins
             </Text>
