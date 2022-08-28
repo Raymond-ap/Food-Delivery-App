@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import {API_KEY} from "@env"
 
 const AddressScreen = () => {
   return (
@@ -18,7 +19,7 @@ const AddressScreen = () => {
       <View className="mx-4 py-3">
         <GooglePlacesAutocomplete
           query={{
-            key: "",
+            key: API_KEY,
             language: "en",
           }}
           onPress={(data, details = null) => {

@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 const Onboarding = () => {
   const navigation = useNavigation();
   return (
-    <View className="flex-1 w-full bg-green-700 items-center p-6">
+    <View className="flex-1 w-full bg-[#189242] items-center p-6">
       <View className="mt-20">
         <Image
           source={require("../../assets/onboarding.png")}
@@ -26,7 +26,7 @@ const Onboarding = () => {
           activeOpacity={0.9}
           className="bg-white w-full py-3 rounded-md shadow-lg mt-6"
         >
-          <Text className="text-center text-green-700 text-base font-bold tracking-wider">
+          <Text className="text-center text-[#189242] text-base font-bold tracking-wider">
             Let's explore
           </Text>
         </TouchableOpacity>
