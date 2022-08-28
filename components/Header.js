@@ -14,7 +14,7 @@ const Header = () => {
       >
         <Ionicons name="location-outline" size={18} color="#f87171" />
         <Text className="capitalize text-sm px-1 font-bold">
-          select location here
+          Current location
         </Text>
         <Ionicons name="chevron-down" size={18} color="#f87171" />
       </TouchableOpacity>
