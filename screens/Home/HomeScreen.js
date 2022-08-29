@@ -3,9 +3,9 @@ import {
   SafeAreaView,
   ScrollView,
   ActivityIndicator,
-  Text,
   Alert,
   View,
+  RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import {
@@ -17,12 +17,20 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+};
+
 const HomeScreen = () => {
   const [featured, setFeatured] = React.useState([]);
   const [restaurants, setRestaurants] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [refreshing, setRefreshing] = React.useState(false);
   const navigation = useNavigation();
 
+  // Fetch data from firebase firestore
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -37,7 +45,7 @@ const HomeScreen = () => {
             };
           });
           let featured = data.filter((item) => item.featured);
-          featured = data.filter((item) => item.currentStatus === "open")
+          featured = data.filter((item) => item.currentStatus === "open");
           setFeatured(featured);
           setRestaurants(data);
           setLoading(false);
@@ -58,6 +66,13 @@ const HomeScreen = () => {
     }
   };
 
+  // Refresh data
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    fetchData();
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -69,7 +84,7 @@ const HomeScreen = () => {
         <View className="flex-1 justify-center items-center">
           <ActivityIndicator size="large" color="#000" />
         </View>
-      <StatusBar style="dark" translucent={false} backgroundColor={"#fff"} />
+        <StatusBar style="dark" translucent={false} backgroundColor={"#fff"} />
       </SafeAreaView>
     );
   }
@@ -77,12 +92,23 @@ const HomeScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <Header />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <FeaturedRow label={"top related"} render={<HorizontalView data={featured} />} />
-        <FeaturedRow label={"new on bolt food"} render={<HorizontalView data={restaurants} />} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        <FeaturedRow
+          label={"top related"}
+          render={<HorizontalView data={featured} />}
+        />
+        <FeaturedRow
+          label={"new on bolt food"}
+          render={<HorizontalView data={restaurants} />}
+        />
         <FeaturedRow
           label={"all restaurant on foodIn"}
-          render={<VerticalView data={restaurants}/>}
+          render={<VerticalView data={restaurants} />}
           disabled
         />
       </ScrollView>
