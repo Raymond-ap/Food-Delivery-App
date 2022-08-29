@@ -7,7 +7,7 @@ const OrderScreen = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="mx-4 py-2 bg-white">
-        <Text className="text--lg font-bold capitalize tracking-wider text-black">
+        <Text className="text-xl font-bold capitalize tracking-wider text-black">
           my orders
         </Text>
       </View>
