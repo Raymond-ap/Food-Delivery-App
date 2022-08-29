@@ -97,7 +97,7 @@ const RenderSearchScreen = ({
           <Ionicons name="arrow-back" size={20} color="#4b5563" />
         </TouchableOpacity>
         <TextInput
-          className="mx-1 flex-1 px-4 py-2 text-base"
+          className="mx-1 flex-1 px-4 py-3 text-base"
           placeholder="Restaurants, food, or cuisine"
           autoFocus
           onChangeText={(text) => setSearchText(text)}
@@ -162,7 +162,7 @@ const Header = ({ setShowSearchScreen }) => {
       <View className="flex-row items-center mt-4 px-2 bg-[#f3f4f6] rounded-md">
         <Ionicons name="search" size={20} color="#ccc" />
         <TextInput
-          className="flex-1 px-4 py-2 text-base"
+          className="flex-1 px-4 py-3 text-base"
           placeholder="Restaurants, food, or cuisine"
           onPressIn={() => setShowSearchScreen(true)}
         />
