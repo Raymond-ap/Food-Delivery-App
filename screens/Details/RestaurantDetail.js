@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   ImageBackground,
   StatusBar,
+  Image,
 } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,12 +15,16 @@ import HeaderImageScrollView, {
   TriggeringView,
   ImageHeaderScrollView,
 } from "react-native-image-header-scroll-view";
+import { truncate, calculateDiscountPrice } from "../../utils";
+
 
 const RestaurantDetail = ({ route }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const item = route.params.item;
   const MIN_HEIGHT = 90;
   const maxHeight = 250;
+
+  console.log(item);
 
   // Fake loading
   React.useEffect(() => {
@@ -33,7 +38,7 @@ const RestaurantDetail = ({ route }) => {
       <ImageHeaderScrollView
         maxHeight={200}
         minHeight={MIN_HEIGHT}
-        maxOverlayOpacity={0.6}
+        maxOverlayOpacity={0.7}
         minOverlayOpacity={0.6}
         renderHeader={() => <Header thumbnail={item?.thumbnail} />}
         renderFixedForeground={() => <RenderForeground />}
@@ -47,7 +52,14 @@ const RestaurantDetail = ({ route }) => {
                   <ActivityIndicator size={"large"} color={"#000"} />
                 </View>
               ) : (
-                <View className="px-4"></View>
+                <View className="px-4 py-4">
+                  <Text className="text-bol text-xl font-bold tracking-wider">
+                    Most popular
+                  </Text>
+                  {item?.menu.map((menuItem, index) => (
+                    <MenuItem key={index} menuItem={menuItem} percentage={item?.discountPercent} />
+                  ))}
+                </View>
               )}
             </View>
           </TriggeringView>
@@ -63,10 +75,43 @@ const RestaurantDetail = ({ route }) => {
   );
 };
 
+const MenuItem = ({ menuItem, percentage }) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.9}
+      className="py-3 my-1 border-t border-gray-300 flex-row"
+    >
+      <View className="flex-1">
+        <Text className="text-base font-bold capitalize tracking-wider">
+          {menuItem.name}
+        </Text>
+        <Text className="text-sm text-gray-600 tracking-wider">
+          {truncate(menuItem.description, 60)}
+        </Text>
+        <View className="py-2 flex-row">
+          {/* strike through text */}
+          <Text className="text-base text-gray-600 tracking-wider line-through">
+            {`GH₵ ${parseInt(menuItem.price).toFixed(2)}`}
+          </Text>
+          <View className="ml-2 bg-red-700 px-2 rounded-full">
+          <Text className="text-base text-white tracking-wider">
+            {`GH₵ ${calculateDiscountPrice(parseInt(menuItem.price), parseInt(percentage))}`}
+          </Text>
+          </View>
+        </View>
+      </View>
+      <Image
+        source={{ uri: menuItem.thumbnail }}
+        className="w-24 h-20 object-cover"
+      />
+    </TouchableOpacity>
+  );
+};
+
 const ErrorCard = () => {
   return (
     <View className="mx-2">
-      <View className="absolute bottom-5 h-10 items-center justify-center rounded-lg shadow-md bg-opacity-60 bg-black w-full">
+      <View className="absolute bottom-5 h-12 items-center justify-center rounded-lg shadow-md bg-opacity-60 bg-gray-800 w-full">
         <Text className="text-sm text-white tracking-wider font-bold">
           Currently not accepting orders now
         </Text>
@@ -83,11 +128,11 @@ const Headline = ({ item }) => {
           <Text className="text-2xl capitalize font-bold tracking-wider">
             {item?.name}
           </Text>
-          <Text className="text-base text-gray-600 capitalize tracking-wider">{`delivery ${item?.deliveryTime}mins`}</Text>
+          <Text className="text-base text-gray-600 capitalize tracking-wider">{`delivery GH₵ ${item?.deliveryFee}.00`}</Text>
         </View>
         <View className="flex-row items-center">
           <Ionicons name="star-sharp" size={15} color={"black"} />
-          <Text className="font-bold text-sm">{item?.rating}</Text>
+          <Text className="font-bold text-xl">{item?.rating}</Text>
         </View>
       </View>
       {item?.discount && (
@@ -150,7 +195,3 @@ const Header = ({ thumbnail }) => {
 };
 
 export default RestaurantDetail;
-
-// name
-// deliveryTime
-// rating
