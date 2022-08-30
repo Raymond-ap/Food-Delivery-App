@@ -31,7 +31,7 @@ const CardItem = ({ item }) => {
       className="w-80 mx-2"
       onPress={() =>
         navigation.navigate("RestaurantDetail", {
-          name: item
+          item: item
         })
       }
     >

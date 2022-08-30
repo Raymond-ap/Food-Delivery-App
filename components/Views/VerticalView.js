@@ -24,7 +24,7 @@ const CardItem = ({ item }) => {
         className="w-full mb-2"
         onPress={() =>
           navigation.navigate("RestaurantDetail", {
-            name: item
+            item: item,
           })
         }
       >
@@ -63,7 +63,7 @@ const CardItem = ({ item }) => {
       className="w-full mb-2"
       onPress={() =>
         navigation.navigate("RestaurantDetail", {
-          name: item
+          item: item,
         })
       }
     >

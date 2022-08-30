@@ -3,13 +3,12 @@ import {
   Text,
   TouchableOpacity,
   SafeAreaView,
-  Image,
+  ActivityIndicator,
   ImageBackground,
   StatusBar,
 } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
-// import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 import HeaderImageScrollView, {
   TriggeringView,
@@ -17,9 +16,17 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 
 const RestaurantDetail = ({ route }) => {
+  const [isLoading, setLoading] = React.useState(true);
   const item = route.params.item;
   const MIN_HEIGHT = 90;
   const maxHeight = 250;
+
+  // Fake loading
+  React.useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 9000);
+  }, []);
 
   return (
     <ImageHeaderScrollView
@@ -27,7 +34,7 @@ const RestaurantDetail = ({ route }) => {
       minHeight={MIN_HEIGHT}
       maxOverlayOpacity={0.6}
       minOverlayOpacity={0.6}
-      renderHeader={() => <Header item={item} />}
+      renderHeader={() => <Header thumbnail={item?.thumbnail} />}
       renderFixedForeground={() => <RenderForeground />}
     >
       <View style={{ height: 1000 }}>
@@ -101,11 +108,11 @@ const RenderForeground = () => {
   );
 };
 
-const Header = ({ item }) => {
+const Header = ({ thumbnail }) => {
   return (
     <ImageBackground
       resizeMode="cover"
-      source={{ uri: item.thumbnail }}
+      source={{ uri: thumbnail }}
       className="w-full h-full"
     >
       <SafeAreaView className="px-5"></SafeAreaView>
