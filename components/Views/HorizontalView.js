@@ -28,7 +28,7 @@ const CardItem = ({ item }) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      className="w-80 mx-2"
+      className="w-64 mx-2"
       onPress={() =>
         navigation.navigate("RestaurantDetail", {
           item: item

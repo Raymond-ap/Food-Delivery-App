@@ -16,7 +16,7 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 
 const RestaurantDetail = ({ route }) => {
-  const [isLoading, setLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(true);
   const item = route.params.item;
   const MIN_HEIGHT = 90;
   const maxHeight = 250;
@@ -24,39 +24,61 @@ const RestaurantDetail = ({ route }) => {
   // Fake loading
   React.useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
-    }, 9000);
+      setIsLoading(false);
+    }, 3000);
   }, []);
 
   return (
-    <ImageHeaderScrollView
-      maxHeight={200}
-      minHeight={MIN_HEIGHT}
-      maxOverlayOpacity={0.6}
-      minOverlayOpacity={0.6}
-      renderHeader={() => <Header thumbnail={item?.thumbnail} />}
-      renderFixedForeground={() => <RenderForeground />}
-    >
-      <View style={{ height: 1000 }}>
-        <TriggeringView>
-          <View>
-            <Headline item={item} />
-          </View>
-        </TriggeringView>
+    <View className="flex-1">
+      <ImageHeaderScrollView
+        maxHeight={200}
+        minHeight={MIN_HEIGHT}
+        maxOverlayOpacity={0.6}
+        minOverlayOpacity={0.6}
+        renderHeader={() => <Header thumbnail={item?.thumbnail} />}
+        renderFixedForeground={() => <RenderForeground />}
+      >
+        <View className="">
+          <TriggeringView>
+            <View className="">
+              <Headline item={item} />
+              {isLoading ? (
+                <View className="items-center justify-center">
+                  <ActivityIndicator size={"large"} color={"#000"} />
+                </View>
+              ) : (
+                <View className="px-4"></View>
+              )}
+            </View>
+          </TriggeringView>
+        </View>
+        <StatusBar
+          barStyle={"light-content"}
+          translucent={true}
+          backgroundColor="transparent"
+        />
+      </ImageHeaderScrollView>
+      {item.currentStatus !== "open" && <ErrorCard />}
+    </View>
+  );
+};
+
+const ErrorCard = () => {
+  return (
+    <View className="mx-2">
+      <View className="absolute bottom-5 h-10 items-center justify-center rounded-lg shadow-md bg-opacity-60 bg-black w-full">
+        <Text className="text-sm text-white tracking-wider font-bold">
+          Currently not accepting orders now
+        </Text>
       </View>
-      <StatusBar
-        barStyle={"light-content"}
-        translucent={true}
-        backgroundColor="transparent"
-      />
-    </ImageHeaderScrollView>
+    </View>
   );
 };
 
 const Headline = ({ item }) => {
   return (
-    <View className="py-2">
-      <View className="px-4 flex-row justify-between">
+    <View className="py-2 px-4 ">
+      <View className="flex-row justify-between">
         <View className="flex-1">
           <Text className="text-2xl capitalize font-bold tracking-wider">
             {item?.name}
@@ -68,10 +90,18 @@ const Headline = ({ item }) => {
           <Text className="font-bold text-sm">{item?.rating}</Text>
         </View>
       </View>
-      <View className="py-1">
+      {item?.discount && (
+        <View className=" flex-row items-center py-3 border-b border-gray-300">
+          <Ionicons name="pricetag" size={20} color={"#dc2626"} />
+          <Text className="text-base text-gray-600 mx-3">
+            {`${item?.discountPercent}% off on the entire menu `}
+          </Text>
+        </View>
+      )}
+      <View className="py-3 border-b border-gray-300">
         <TouchableOpacity
           activeOpacity={1}
-          className="px-4 py-2 items-center flex-row justify-between"
+          className="items-center flex-row justify-between"
         >
           <View className="flex-row items-center">
             <Ionicons name="warning-outline" size={15} color={"#4b5563"} />
@@ -85,7 +115,6 @@ const Headline = ({ item }) => {
             color={"#4b5563"}
           />
         </TouchableOpacity>
-        <View className="h-0.5 w-full bg-gray-200" />
       </View>
     </View>
   );
