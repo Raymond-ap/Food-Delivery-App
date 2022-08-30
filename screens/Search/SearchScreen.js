@@ -160,7 +160,7 @@ const RenderSearchScreen = ({
   searchResult,
 }) => {
   return (
-    <ScrollView className="flex-1">
+    <View className="flex-1">
       <View
         style={{
           elevation: 5,
@@ -185,7 +185,7 @@ const RenderSearchScreen = ({
           value={searchText}
         />
       </View>
-      <View className=" py-5 mx-4">
+      <ScrollView className="flex-1 py-5 mx-4">
         {searching ? (
           <View className="flex-1 justify-center items-center">
             <ActivityIndicator size="large" color="#000" />
@@ -193,8 +193,8 @@ const RenderSearchScreen = ({
         ) : (
           <VerticalView data={searchResult} />
         )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
