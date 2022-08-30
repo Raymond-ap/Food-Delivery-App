@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Onboarding, AddressScreen } from "./screens";
+import { Onboarding, AddressScreen, RestaurantDetail, RestaurantInfo } from "./screens";
 import { TailwindProvider } from "tailwindcss-react-native";
 import TabNavigator from "./navigation/TabNavigator";
 
@@ -25,6 +25,8 @@ export default function App() {
             name="SetAddress"
             component={AddressScreen}
           />
+            <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
+            <Stack.Screen name="RestaurantInfo" component={RestaurantInfo} />
         </Stack.Navigator>
       </TailwindProvider>
     </NavigationContainer>
