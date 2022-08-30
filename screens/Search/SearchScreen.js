@@ -66,14 +66,6 @@ const SearchScreen = () => {
     }
   };
 
-  const handleSearch = async () => {
-    try {
-    } catch (error) {
-      setSearching(false);
-      console.log(error.message);
-    }
-  };
-
   // Refresh data
   const onRefresh = React.useCallback(() => {
     fetchCategories();

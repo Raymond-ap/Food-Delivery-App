@@ -17,7 +17,6 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 import { truncate, calculateDiscountPrice } from "../../utils";
 
-
 const RestaurantDetail = ({ route }) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const item = route.params.item;
@@ -57,7 +56,12 @@ const RestaurantDetail = ({ route }) => {
                     Most popular
                   </Text>
                   {item?.menu.map((menuItem, index) => (
-                    <MenuItem key={index} menuItem={menuItem} percentage={item?.discountPercent} />
+                    <MenuItem
+                      key={index}
+                      menuItem={menuItem}
+                      percentage={item?.discountPercent}
+                      discount={item?.discount}
+                    />
                   ))}
                 </View>
               )}
@@ -75,7 +79,7 @@ const RestaurantDetail = ({ route }) => {
   );
 };
 
-const MenuItem = ({ menuItem, percentage }) => {
+const MenuItem = ({ menuItem, percentage, discount }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -90,14 +94,19 @@ const MenuItem = ({ menuItem, percentage }) => {
         </Text>
         <View className="py-2 flex-row">
           {/* strike through text */}
-          <Text className="text-base text-gray-600 tracking-wider line-through">
+          <Text className={`text-base text-gray-600 tracking-wider ${discount && "line-through"}`}>
             {`GH₵ ${parseInt(menuItem.price).toFixed(2)}`}
           </Text>
-          <View className="ml-2 bg-red-700 px-2 rounded-full">
-          <Text className="text-base text-white tracking-wider">
-            {`GH₵ ${calculateDiscountPrice(parseInt(menuItem.price), parseInt(percentage))}`}
-          </Text>
-          </View>
+          {discount && (
+            <View className="ml-2 bg-red-700 px-2 rounded-full">
+              <Text className="text-base text-white tracking-wider">
+                {`GH₵ ${calculateDiscountPrice(
+                  parseInt(menuItem.price),
+                  parseInt(percentage)
+                )}`}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
       <Image
