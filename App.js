@@ -1,7 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Onboarding, AddressScreen, RestaurantDetail, RestaurantInfo } from "./screens";
+import {
+  Onboarding,
+  AddressScreen,
+  RestaurantDetail,
+  RestaurantInfo,
+} from "./screens";
 import { TailwindProvider } from "tailwindcss-react-native";
 import TabNavigator from "./navigation/TabNavigator";
 
@@ -15,18 +20,38 @@ export default function App() {
           initialRouteName="Onboarding"
           screenOptions={{ headerShown: false }}
         >
-          <Stack.Screen name="Onboarding" component={Onboarding} />
-          <Stack.Screen name="Home" component={TabNavigator} />
-          <Stack.Screen
-            options={{
+          <Stack.Group>
+            <Stack.Screen name="Onboarding" component={Onboarding} />
+            <Stack.Screen name="Home" component={TabNavigator} />
+          </Stack.Group>
+          <Stack.Group
+            screenOptions={{
               presentation: "modal",
               animationTypeForReplace: "push",
             }}
-            name="SetAddress"
-            component={AddressScreen}
-          />
-            <Stack.Screen name="RestaurantDetail" component={RestaurantDetail} />
-            <Stack.Screen name="RestaurantInfo" component={RestaurantInfo} />
+          >
+            <Stack.Screen
+              options={{
+                animation: "slide_from_bottom",
+              }}
+              name="SetAddress"
+              component={AddressScreen}
+            />
+            <Stack.Screen
+              options={{
+                animation: "slide_from_bottom",
+              }}
+              name="RestaurantInfo"
+              component={RestaurantInfo}
+            />
+            <Stack.Screen
+              options={{
+                animation: "simple_push",
+              }}
+              name="RestaurantDetail"
+              component={RestaurantDetail}
+            />
+          </Stack.Group>
         </Stack.Navigator>
       </TailwindProvider>
     </NavigationContainer>
