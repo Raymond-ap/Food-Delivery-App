@@ -15,12 +15,15 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import HeaderImageScrollView, {
   TriggeringView,
   ImageHeaderScrollView,
 } from "react-native-image-header-scroll-view";
+import Animated from "react-native-reanimated";
+// import BottomSheet from 'reanimated-bottom-sheet';
+
 import { truncate, calculateDiscountPrice } from "../../utils";
 
 const RestaurantDetail = ({ route }) => {
@@ -139,6 +142,7 @@ const ErrorCard = () => {
 };
 
 const Headline = ({ item }) => {
+  const navigation = useNavigation();
   return (
     <View className="py-2 px-4 ">
       <View className="flex-row justify-between">
@@ -164,6 +168,7 @@ const Headline = ({ item }) => {
       <View className="py-3 border-b border-gray-300">
         <TouchableOpacity
           activeOpacity={1}
+          onPress={() => navigation.navigate("RestaurantInfo", { info: item })}
           className="items-center flex-row justify-between"
         >
           <View className="flex-row items-center">
