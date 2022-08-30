@@ -26,6 +26,7 @@ const SearchScreen = () => {
   const [searchResult, setSearchResult] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [searching, setSearching] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
   // pull categories from list of restaurants
@@ -65,11 +66,18 @@ const SearchScreen = () => {
     }
   };
 
+  const handleSearch = async () => {
+    try {
+    } catch (error) {
+      setSearching(false);
+      console.log(error.message);
+    }
+  };
+
   // Refresh data
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
     fetchCategories();
-    wait(2000).then(() => setRefreshing(false));
+    wait(2000);
   }, []);
 
   React.useEffect(() => {
