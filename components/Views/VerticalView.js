@@ -24,11 +24,7 @@ const CardItem = ({ item }) => {
         className="w-full mb-2"
         onPress={() =>
           navigation.navigate("RestaurantDetail", {
-            name: item?.name,
-            thumbnail: item?.thumbnail,
-            rating: item?.rating,
-            deliveryTime: item?.deliveryTime,
-            id: item?.id,
+            name: item
           })
         }
       >
@@ -67,11 +63,7 @@ const CardItem = ({ item }) => {
       className="w-full mb-2"
       onPress={() =>
         navigation.navigate("RestaurantDetail", {
-          name: item?.name,
-          thumbnail: item?.thumbnail,
-          rating: item?.rating,
-          deliveryTime: item?.deliveryTime,
-          id: item?.id,
+          name: item
         })
       }
     >
