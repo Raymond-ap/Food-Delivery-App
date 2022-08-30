@@ -4,6 +4,8 @@ import SearchScreen from "./Search/SearchScreen";
 import OrderScreen from "./Orders/OrderScreen";
 import ProfileScreen from "./Profile/ProfileScreen";
 import AddressScreen from './Location/AddressScreen'
+import RestaurantDetail from "./Details/RestaurantDetail";
+import RestaurantInfo from "./Details/RestaurantInfo";
 
 export {
     Onboarding,
@@ -11,5 +13,7 @@ export {
     OrderScreen,
     SearchScreen,
     ProfileScreen,
-    AddressScreen
+    AddressScreen,
+    RestaurantDetail,
+    RestaurantInfo
 }
