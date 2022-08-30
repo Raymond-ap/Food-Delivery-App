@@ -4,7 +4,6 @@ export const truncate = (str, n) => {
 };
 
 export const calculateDiscountPrice = (amount, percentage) => {
-  console.log(amount, percentage);
   const discount = (amount / 100) * (100 - percentage);
   return discount.toFixed(2);
 };
