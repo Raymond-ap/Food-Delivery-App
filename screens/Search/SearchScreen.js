@@ -8,11 +8,13 @@ import {
   Alert,
   ActivityIndicator,
   RefreshControl,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { db } from "../../firebase";
+import { VerticalView } from "../../components";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -66,6 +68,36 @@ const SearchScreen = () => {
     }
   };
 
+  const handleSearch = async () => {
+    setSearching(true);
+    try {
+      const restaurant = await db
+        .collection("restaurant")
+        .get()
+        .then((querySnapshot) => {
+          const data = querySnapshot.docs.map((doc) => {
+            let data = {
+              id: doc.id,
+              ...doc.data(),
+            };
+            return data;
+          });
+          return data;
+        });
+      let searchResult = restaurant.filter((item) => {
+        return (
+          item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.categories.includes(searchText)
+        );
+      });
+      setSearching(false);
+      setSearchResult(searchResult);
+    } catch (error) {
+      setSearching(false);
+      alert(error.message);
+    }
+  };
+
   // Refresh data
   const onRefresh = React.useCallback(() => {
     fetchCategories();
@@ -96,12 +128,16 @@ const SearchScreen = () => {
     <SafeAreaView className="flex-1 bg-white">
       {showSearchScreen ? (
         <RenderSearchScreen
+          searching={searching}
+          handleSearch={handleSearch}
           setShowSearchScreen={setShowSearchScreen}
           searchText={searchText}
           setSearchText={setSearchText}
+          searchResult={searchResult}
         />
       ) : (
         <InitialScreen
+          handleSearch={handleSearch}
           setShowSearchScreen={setShowSearchScreen}
           searchText={searchText}
           setSearchText={setSearchText}
@@ -119,9 +155,12 @@ const RenderSearchScreen = ({
   setShowSearchScreen,
   setSearchText,
   searchText,
+  handleSearch,
+  searching,
+  searchResult,
 }) => {
   return (
-    <View className="flex-1">
+    <ScrollView className="flex-1">
       <View
         style={{
           elevation: 5,
@@ -138,11 +177,24 @@ const RenderSearchScreen = ({
           className="mx-1 flex-1 px-4 py-3 text-base"
           placeholder="Restaurants, food, or cuisine"
           autoFocus
-          onChangeText={(text) => setSearchText(text)}
+          onChangeText={(text) => {
+            setSearchText(text);
+            handleSearch();
+          }}
+          returnKeyType="search"
           value={searchText}
         />
       </View>
-    </View>
+      <View className=" py-5 mx-4">
+        {searching ? (
+          <View className="flex-1 justify-center items-center">
+            <ActivityIndicator size="large" color="#000" />
+          </View>
+        ) : (
+          <VerticalView data={searchResult} />
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -152,6 +204,7 @@ const InitialScreen = ({
   categories,
   refreshing,
   onRefresh,
+  handleSearch,
 }) => {
   return (
     <View className="flex-1 bg-white">
@@ -171,6 +224,7 @@ const InitialScreen = ({
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => (
           <CategoryItem
+            handleSearch={handleSearch}
             item={item}
             setSearchText={setSearchText}
             setShowSearchScreen={setShowSearchScreen}
@@ -182,11 +236,17 @@ const InitialScreen = ({
   );
 };
 
-const CategoryItem = ({ item, setShowSearchScreen, setSearchText }) => {
+const CategoryItem = ({
+  item,
+  setShowSearchScreen,
+  setSearchText,
+  handleSearch,
+}) => {
   return (
     <TouchableOpacity
       onPress={() => {
         setSearchText(item);
+        handleSearch();
         setShowSearchScreen(true);
       }}
       activeOpacity={0.9}

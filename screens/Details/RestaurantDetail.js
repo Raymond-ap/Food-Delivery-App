@@ -8,7 +8,13 @@ import {
   StatusBar,
   Image,
 } from "react-native";
-import React from "react";
+import React, {
+  useRef,
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import HeaderImageScrollView, {
@@ -18,64 +24,63 @@ import HeaderImageScrollView, {
 import { truncate, calculateDiscountPrice } from "../../utils";
 
 const RestaurantDetail = ({ route }) => {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const item = route.params.item;
-  const MIN_HEIGHT = 90;
-  const maxHeight = 250;
-
-  console.log(item);
 
   // Fake loading
-  React.useEffect(() => {
+  useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
   }, []);
 
   return (
-    <View className="flex-1">
-      <ImageHeaderScrollView
-        maxHeight={200}
-        minHeight={MIN_HEIGHT}
-        maxOverlayOpacity={0.7}
-        minOverlayOpacity={0.6}
-        renderHeader={() => <Header thumbnail={item?.thumbnail} />}
-        renderFixedForeground={() => <RenderForeground />}
-      >
-        <View className="">
-          <TriggeringView>
-            <View className="">
-              <Headline item={item} />
-              {isLoading ? (
-                <View className="items-center justify-center">
-                  <ActivityIndicator size={"large"} color={"#000"} />
-                </View>
-              ) : (
-                <View className="px-4 py-4">
-                  <Text className="text-bol text-xl font-bold tracking-wider">
-                    Most popular
-                  </Text>
-                  {item?.menu.map((menuItem, index) => (
-                    <MenuItem
-                      key={index}
-                      menuItem={menuItem}
-                      percentage={item?.discountPercent}
-                      discount={item?.discount}
-                    />
-                  ))}
-                </View>
-              )}
-            </View>
-          </TriggeringView>
-        </View>
-        <StatusBar
-          barStyle={"light-content"}
-          translucent={true}
-          backgroundColor="transparent"
-        />
-      </ImageHeaderScrollView>
-      {item.currentStatus !== "open" && <ErrorCard />}
-    </View>
+    <>
+      <View className="flex-1">
+        <ImageHeaderScrollView
+          maxHeight={200}
+          minHeight={90}
+          maxOverlayOpacity={0.7}
+          minOverlayOpacity={0.6}
+          renderHeader={() => <Header thumbnail={item?.thumbnail} />}
+          renderFixedForeground={() => <RenderForeground />}
+        >
+          <View className="">
+            <TriggeringView>
+              <View className="">
+                <Headline item={item} />
+                {isLoading ? (
+                  <View className="items-center justify-center">
+                    <ActivityIndicator size={"large"} color={"#000"} />
+                  </View>
+                ) : (
+                  <View className="px-4 py-4">
+                    <Text className="text-bol text-xl font-bold tracking-wider">
+                      Most popular
+                    </Text>
+                    {item?.menu.map((menuItem, index) => (
+                      <MenuItem
+                        key={index}
+                        menuItem={menuItem}
+                        percentage={item?.discountPercent}
+                        discount={item?.discount}
+                      />
+                    ))}
+                  </View>
+                )}
+              </View>
+            </TriggeringView>
+          </View>
+        </ImageHeaderScrollView>
+
+        {item.currentStatus !== "open" && <ErrorCard />}
+      </View>
+      <StatusBar
+        barStyle={"light-content"}
+        translucent={true}
+        backgroundColor="transparent"
+      />
+    </>
   );
 };
 
@@ -94,7 +99,11 @@ const MenuItem = ({ menuItem, percentage, discount }) => {
         </Text>
         <View className="py-2 flex-row">
           {/* strike through text */}
-          <Text className={`text-base text-gray-600 tracking-wider ${discount && "line-through"}`}>
+          <Text
+            className={`text-base text-gray-600 tracking-wider ${
+              discount && "line-through"
+            }`}
+          >
             {`GH₵ ${parseInt(menuItem.price).toFixed(2)}`}
           </Text>
           {discount && (
