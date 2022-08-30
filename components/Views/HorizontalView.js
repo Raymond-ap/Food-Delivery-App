@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const HorizontalView = ({ data }) => {
   return (
@@ -22,22 +23,36 @@ const HorizontalView = ({ data }) => {
   );
 };
 
-const CardItem = ({item}) => {
+const CardItem = ({ item }) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity activeOpacity={1} className="w-80 mx-2">
+    <TouchableOpacity
+      activeOpacity={1}
+      className="w-80 mx-2"
+      onPress={() =>
+        navigation.navigate("RestaurantDetail", {
+          name: item?.name,
+          thumbnail: item?.thumbnail,
+          rating: item?.rating,
+          deliveryTime: item?.deliveryTime,
+          id: item?.id,
+        })
+      }
+    >
       <ImageBackground
-      imageStyle={{ borderRadius: 10 }}
-      source={{uri: item?.thumbnail}}
-      className="h-32 w-full relative rounded-lg object-cover">
+        imageStyle={{ borderRadius: 10 }}
+        source={{ uri: item?.thumbnail }}
+        className="h-32 w-full relative rounded-lg object-cover"
+      >
         {item?.discount && (
           <View className="absolute top-2 left-2">
-          <View className="bg-white ite py-1 px-2 items-center justify-center rounded-full shadow-sm">
-            <Text className="text-sm tracking-widest font-semibold text-red-500">
-              {`${item?.discountPercent}%`}
-            </Text>
+            <View className="bg-white ite py-1 px-2 items-center justify-center rounded-full shadow-sm">
+              <Text className="text-sm tracking-widest font-semibold text-red-500">
+                {`${item?.discountPercent}%`}
+              </Text>
+            </View>
           </View>
-        </View>
-          )}
+        )}
         <View className="absolute bottom-2 right-2">
           <View className="bg-white py-2 px-4 items-center justify-center rounded-full shadow-sm">
             <Text className="text-sm tracking-widest font-semibold">
@@ -53,9 +68,7 @@ const CardItem = ({item}) => {
           </Text>
           <View className="flex-row items-center">
             <Ionicons name="star-sharp" size={15} color={"black"} />
-            <Text className="font-bold text-sm">
-              {item?.rating}
-            </Text>
+            <Text className="font-bold text-sm">{item?.rating}</Text>
           </View>
         </View>
         <Text className="text-base">GHC {item?.deliveryFee}.00</Text>

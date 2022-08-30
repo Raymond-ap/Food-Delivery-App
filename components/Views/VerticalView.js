@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, ImageBackground } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const VerticalView = ({ data }) => {
   return (
@@ -14,9 +15,23 @@ const VerticalView = ({ data }) => {
 };
 
 const CardItem = ({ item }) => {
+  const navigation = useNavigation();
+
   if (item.currentStatus !== "open") {
     return (
-      <TouchableOpacity activeOpacity={1} className="w-full mb-2">
+      <TouchableOpacity
+        activeOpacity={1}
+        className="w-full mb-2"
+        onPress={() =>
+          navigation.navigate("RestaurantDetail", {
+            name: item?.name,
+            thumbnail: item?.thumbnail,
+            rating: item?.rating,
+            deliveryTime: item?.deliveryTime,
+            id: item?.id,
+          })
+        }
+      >
         <ImageBackground
           imageStyle={{ borderRadius: 10 }}
           source={{ uri: item?.thumbnail }}
@@ -26,16 +41,40 @@ const CardItem = ({ item }) => {
             className="absolute inset-0 items-center justify-center"
             colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0.8)"]}
           >
-            <Text className="text-lg capitalize text-center text-white font-bold">
-              currently not accepting orders
+            <Text className="text-lg tracking-wider text-center text-white font-bold">
+              Currently not accepting orders
             </Text>
           </LinearGradient>
         </ImageBackground>
+        <View className="my-1">
+          <View className="flex-row justify-between items-center">
+            <Text className="font-bold text-base capitalize flex-1">
+              {item?.name}
+            </Text>
+            <View className="flex-row items-center">
+              <Ionicons name="star-sharp" size={15} color={"black"} />
+              <Text className="font-bold text-sm">{item?.rating}</Text>
+            </View>
+          </View>
+          <Text className="text-base">GHC {item?.deliveryFee}.00</Text>
+        </View>
       </TouchableOpacity>
     );
   }
   return (
-    <TouchableOpacity activeOpacity={1} className="w-full mb-2">
+    <TouchableOpacity
+      activeOpacity={1}
+      className="w-full mb-2"
+      onPress={() =>
+        navigation.navigate("RestaurantDetail", {
+          name: item?.name,
+          thumbnail: item?.thumbnail,
+          rating: item?.rating,
+          deliveryTime: item?.deliveryTime,
+          id: item?.id,
+        })
+      }
+    >
       <ImageBackground
         imageStyle={{ borderRadius: 10 }}
         source={{ uri: item?.thumbnail }}
