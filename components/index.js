@@ -5,6 +5,7 @@ import Header from './Header'
 import MenuItem from './MenuItem'
 import ErrorCard from './ErrorCard'
 import Headline from './Headline'
+import BasketCard from './BasketCard'
 
 export {
     FeaturedRow,
@@ -13,5 +14,6 @@ export {
     VerticalView,
     MenuItem,
     ErrorCard,
-    Headline
+    Headline,
+    BasketCard
 }
