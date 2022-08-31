@@ -26,21 +26,41 @@ import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 import { useSelector } from "react-redux";
 import { selectBasketItems } from "../../redux/slice/BasketSlice";
+import { useDispatch } from "react-redux";
 
 import { truncate, calculateDiscountPrice } from "../../utils";
 import { ErrorCard, Headline, MenuItem, BasketCard } from "../../components";
+import { setRestaurant } from "../../redux/slice/RestaurantSlice";
 
 const RestaurantDetail = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const item = route.params.item;
   const basketItems = useSelector(selectBasketItems);
+  const dispatch = useDispatch();
+
+  let restaurantItem = {
+    id: item.id,
+    name: item.name,
+    description: item.description,
+    image: item.thumbnail,
+    rating: item.rating,
+    deliveryFee: item.deliveryFee,
+    discountPercent: item.discountPercent,
+    deliveryTime: item.deliveryTime,
+    discount: item.discount,
+    latitude: item.location.latitude,
+    longitude: item.location.longitude,
+    menu: item.menu,
+  };
 
   // Fake loading
   useEffect(() => {
+    dispatch(setRestaurant(restaurantItem));
+
     setTimeout(() => {
       setIsLoading(false);
     }, 3000);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -84,7 +104,9 @@ const RestaurantDetail = ({ route }) => {
             </TriggeringView>
           </View>
         </ImageHeaderScrollView>
-        {basketItems.length > 0 && item.currentStatus === "open" && <BasketCard />}
+        {basketItems.length !== 0 && item.currentStatus === "open" && (
+          <BasketCard />
+        )}
         {item.currentStatus !== "open" && <ErrorCard />}
       </View>
       <StatusBar
