@@ -10,11 +10,15 @@ import {
 import { TailwindProvider } from "tailwindcss-react-native";
 import TabNavigator from "./navigation/TabNavigator";
 
+import { store } from "./redux/store";
+import { Provider } from "react-redux";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
+      <Provider store={store}>
       <TailwindProvider>
         <Stack.Navigator
           initialRouteName="Onboarding"
@@ -54,6 +58,7 @@ export default function App() {
           </Stack.Group>
         </Stack.Navigator>
       </TailwindProvider>
+      </Provider>
     </NavigationContainer>
   );
 }
