@@ -24,13 +24,16 @@ import HeaderImageScrollView, {
 } from "react-native-image-header-scroll-view";
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
+import { useSelector } from "react-redux";
+import { selectBasketItems } from "../../redux/slice/BasketSlice";
 
 import { truncate, calculateDiscountPrice } from "../../utils";
-import { ErrorCard, Headline, MenuItem } from "../../components";
+import { ErrorCard, Headline, MenuItem, BasketCard } from "../../components";
 
 const RestaurantDetail = ({ route }) => {
   const [isLoading, setIsLoading] = useState(true);
   const item = route.params.item;
+  const basketItems = useSelector(selectBasketItems);
 
   // Fake loading
   useEffect(() => {
@@ -69,6 +72,10 @@ const RestaurantDetail = ({ route }) => {
                         menuItem={menuItem}
                         percentage={item?.discountPercent}
                         discount={item?.discount}
+                        currentStatus={
+                          item?.currentStatus !== "open" ? true : false
+                        }
+                        id={Math.random().toString(36).substr(2, 9)}
                       />
                     ))}
                   </View>
@@ -77,7 +84,7 @@ const RestaurantDetail = ({ route }) => {
             </TriggeringView>
           </View>
         </ImageHeaderScrollView>
-
+        {basketItems.length > 0 && item.currentStatus === "open" && <BasketCard />}
         {item.currentStatus !== "open" && <ErrorCard />}
       </View>
       <StatusBar
@@ -88,7 +95,6 @@ const RestaurantDetail = ({ route }) => {
     </>
   );
 };
-
 
 const RenderForeground = () => {
   const navigation = useNavigation();
