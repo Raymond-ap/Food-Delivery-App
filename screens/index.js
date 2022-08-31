@@ -6,6 +6,7 @@ import ProfileScreen from "./Profile/ProfileScreen";
 import AddressScreen from './Location/AddressScreen'
 import RestaurantDetail from "./Details/RestaurantDetail";
 import RestaurantInfo from "./Details/RestaurantInfo";
+import BasketScreen from './Basket/BasketScreen'
 
 export {
     Onboarding,
@@ -15,5 +16,6 @@ export {
     ProfileScreen,
     AddressScreen,
     RestaurantDetail,
-    RestaurantInfo
+    RestaurantInfo,
+    BasketScreen
 }
