@@ -16,7 +16,10 @@ import MapView, { Marker } from "react-native-maps";
 import Checkbox from "expo-checkbox";
 import { useDispatch, useSelector } from "react-redux";
 import { selectRestaurant } from "../../redux/slice/RestaurantSlice";
-import { selectBasketItems } from "../../redux/slice/BasketSlice";
+import {
+  selectBasketItems,
+  selectBasketTotal,
+} from "../../redux/slice/BasketSlice";
 import { useMemo } from "react";
 import { useState } from "react";
 
@@ -25,6 +28,7 @@ export default function BasketScreen() {
   const navigation = useNavigation();
   const restaurant = useSelector(selectRestaurant);
   const basketItems = useSelector(selectBasketItems);
+  const basketTotal = useSelector(selectBasketTotal);
   const [uniqueBaskerItems, setUniqueBasketItems] = useState([]);
 
   useMemo(() => {
@@ -51,7 +55,7 @@ export default function BasketScreen() {
         <Tabs />
         <View className="my-2">
           {Object.entries(uniqueBaskerItems).map(([index, items]) => (
-            <BasketItem items={items} key={index}/>
+            <BasketItem items={items} index={index} key={index} />
           ))}
         </View>
         <SelectMore handleBackPress={() => handleBackPress()} />
@@ -84,7 +88,7 @@ export default function BasketScreen() {
             Total
           </Text>
           <Text className="text-xl font-bold text-black tracking-wider">
-            GH₵ 10.00
+            GH₵ {parseInt(basketTotal).toFixed(2)}
           </Text>
         </View>
         <DeliveryDetails restaurant={restaurant} />

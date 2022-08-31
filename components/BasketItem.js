@@ -2,23 +2,32 @@ import { View, Text } from "react-native";
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { truncate } from "../utils";
+import { useDispatch } from "react-redux";
+import { removeFromBasket } from "../redux/slice/BasketSlice";
 
-const BasketItem = ({ items }) => {
-  console.log(items);
+const BasketItem = ({ items, index }) => {
+  const dispatch = useDispatch();
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      className="flex-row justify-between items-center py-3 border-b border-gray-200"
-    >
+    <View className="flex-row justify-between py-3 border-b border-gray-200">
       <Text className="text-base text-gray-700 tracking-wider">{`${
         items.length
-      } x ${truncate(items[0]?.name, 40)}`}</Text>
-      <Text className="text-base text-gray-700 tracking-wider">{`GH₵ ${truncate(
-        (items[0].price * items.length).toFixed(2),
-        40
-      )}`}</Text>
-    </TouchableOpacity>
+      } x ${truncate(items[0]?.name, 25)}`}</Text>
+      <View className="items-center">
+        <Text className="text-base text-gray-700 tracking-wider mx-3">{`GH₵ ${truncate(
+          (items[0].price * items.length).toFixed(2),
+          40
+        )}`}</Text>
+        <TouchableOpacity
+          onPress={() => dispatch(removeFromBasket({ id: index }))}
+        >
+          <Text className="text-sm text-green-600 font-bold tracking-wider">
+            Remove
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };
 
+//
 export default BasketItem;
