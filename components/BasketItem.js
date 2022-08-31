@@ -3,18 +3,18 @@ import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { truncate } from "../utils";
 
-const BasketItem = () => {
+const BasketItem = ({ items }) => {
+  console.log(items);
   return (
     <TouchableOpacity
       activeOpacity={1}
       className="flex-row justify-between items-center py-3 border-b border-gray-200"
     >
-      <Text className="text-base text-gray-700 tracking-wider">{`1 x ${truncate(
-        "Chicken and chips",
-        40
-      )}`}</Text>
+      <Text className="text-base text-gray-700 tracking-wider">{`${
+        items.length
+      } x ${truncate(items[0]?.name, 40)}`}</Text>
       <Text className="text-base text-gray-700 tracking-wider">{`GH₵ ${truncate(
-        "10.00",
+        (items[0].price * items.length).toFixed(2),
         40
       )}`}</Text>
     </TouchableOpacity>
