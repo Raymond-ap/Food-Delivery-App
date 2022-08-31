@@ -6,6 +6,7 @@ import {
   AddressScreen,
   RestaurantDetail,
   RestaurantInfo,
+  BasketScreen,
 } from "./screens";
 import { TailwindProvider } from "tailwindcss-react-native";
 import TabNavigator from "./navigation/TabNavigator";
@@ -19,45 +20,52 @@ export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-      <TailwindProvider>
-        <Stack.Navigator
-          initialRouteName="Onboarding"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Group>
-            <Stack.Screen name="Onboarding" component={Onboarding} />
-            <Stack.Screen name="Home" component={TabNavigator} />
-          </Stack.Group>
-          <Stack.Group
-            screenOptions={{
-              presentation: "modal",
-              animationTypeForReplace: "push",
-            }}
+        <TailwindProvider>
+          <Stack.Navigator
+            initialRouteName="Onboarding"
+            screenOptions={{ headerShown: false }}
           >
-            <Stack.Screen
-              options={{
-                animation: "slide_from_bottom",
+            <Stack.Group>
+              <Stack.Screen name="Onboarding" component={Onboarding} />
+              <Stack.Screen name="Home" component={TabNavigator} />
+            </Stack.Group>
+            <Stack.Group
+              screenOptions={{
+                presentation: "modal",
+                animationTypeForReplace: "push",
               }}
-              name="SetAddress"
-              component={AddressScreen}
-            />
-            <Stack.Screen
-              options={{
-                animation: "slide_from_bottom",
-              }}
-              name="RestaurantInfo"
-              component={RestaurantInfo}
-            />
-            <Stack.Screen
-              options={{
-                animation: "simple_push",
-              }}
-              name="RestaurantDetail"
-              component={RestaurantDetail}
-            />
-          </Stack.Group>
-        </Stack.Navigator>
-      </TailwindProvider>
+            >
+              <Stack.Screen
+                options={{
+                  animation: "slide_from_bottom",
+                }}
+                name="SetAddress"
+                component={AddressScreen}
+              />
+              <Stack.Screen
+                options={{
+                  animation: "slide_from_bottom",
+                }}
+                name="RestaurantInfo"
+                component={RestaurantInfo}
+              />
+              <Stack.Screen
+                options={{
+                  animation: "simple_push",
+                }}
+                name="RestaurantDetail"
+                component={RestaurantDetail}
+              />
+              <Stack.Screen
+                options={{
+                  animation: "slide_from_bottom",
+                }}
+                name="BasketScreen"
+                component={BasketScreen}
+              />
+            </Stack.Group>
+          </Stack.Navigator>
+        </TailwindProvider>
       </Provider>
     </NavigationContainer>
   );
