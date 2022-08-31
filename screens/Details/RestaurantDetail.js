@@ -75,7 +75,7 @@ const RestaurantDetail = ({ route }) => {
                         currentStatus={
                           item?.currentStatus !== "open" ? true : false
                         }
-                        id={Math.random().toString(36).substr(2, 9)}
+                        id={menuItem?.id}
                       />
                     ))}
                   </View>
