@@ -25,9 +25,8 @@ import HeaderImageScrollView, {
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 import { useSelector } from "react-redux";
-import { selectBasketItems } from "../../redux/slice/BasketSlice";
+import { selectBasketItems, addToBasket } from "../../redux/slice/BasketSlice";
 import { useDispatch } from "react-redux";
-
 import { truncate, calculateDiscountPrice } from "../../utils";
 import { ErrorCard, Headline, MenuItem, BasketCard } from "../../components";
 import { setRestaurant } from "../../redux/slice/RestaurantSlice";
@@ -37,6 +36,11 @@ const RestaurantDetail = ({ route }) => {
   const item = route.params.item;
   const basketItems = useSelector(selectBasketItems);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const navigateBack = () => {
+    navigation.goBack();
+  };
 
   let restaurantItem = {
     id: item.id,
@@ -71,7 +75,9 @@ const RestaurantDetail = ({ route }) => {
           maxOverlayOpacity={0.7}
           minOverlayOpacity={0.6}
           renderHeader={() => <Header thumbnail={item?.thumbnail} />}
-          renderFixedForeground={() => <RenderForeground />}
+          renderFixedForeground={() => (
+            <RenderForeground navigateBack={navigateBack} />
+          )}
         >
           <View className="">
             <TriggeringView>
@@ -118,8 +124,7 @@ const RestaurantDetail = ({ route }) => {
   );
 };
 
-const RenderForeground = () => {
-  const navigation = useNavigation();
+const RenderForeground = ({ navigateBack }) => {
   return (
     <View
       style={{
@@ -127,7 +132,7 @@ const RenderForeground = () => {
       }}
       className="flex-row items-center justify-center mx-4 "
     >
-      <TouchableOpacity activeOpacity={0.8} onPress={() => navigation.goBack()}>
+      <TouchableOpacity activeOpacity={0.8} onPress={navigateBack}>
         <Ionicons name="arrow-back" size={25} color="#fff" />
       </TouchableOpacity>
       <View className="flex-1"></View>
