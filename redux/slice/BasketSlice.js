@@ -30,7 +30,7 @@ export const BasketSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToBasket, removeFromBasket } = BasketSlice.actions;
+export const { addToBasket, removeFromBasket, clearBasket } = BasketSlice.actions;
 
 export const selectBasketItems = (state) => state.basket.items;
 
