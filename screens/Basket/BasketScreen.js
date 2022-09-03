@@ -39,8 +39,6 @@ export default function BasketScreen() {
     setUniqueBasketItems(uniqueItems);
   }, [basketItems]);
 
-  console.log(uniqueBaskerItems);
-
   const handleBackPress = () => {
     navigation.goBack();
   };
@@ -172,7 +170,8 @@ const DeliveryDetails = ({ restaurant }) => {
       </View>
       <View className="pt-5">
         <TouchableOpacity
-          disabled={isChecked}
+          onPress={() => navigation.navigate("DeliveryScreen")}
+          disabled={!isChecked}
           activeOpacity={0.8}
           className={`${
             isChecked ? "bg-green-600" : "bg-green-300"
@@ -182,7 +181,9 @@ const DeliveryDetails = ({ restaurant }) => {
             <Ionicons name="arrow-forward-sharp" size={25} color="#16a34a" />
           </View>
           <View className="items-center justify-center ml-10">
-            <Text className="text-xl font-bold text-white">Order ChC46.00</Text>
+            <Text className="text-xl font-bold text-white tracking-wider">
+              Order GH₵46.00
+            </Text>
             <Text className="text-sm font-bold text-white">Slide to order</Text>
           </View>
         </TouchableOpacity>
