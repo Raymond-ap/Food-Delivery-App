@@ -7,6 +7,7 @@ import {
   RestaurantDetail,
   RestaurantInfo,
   BasketScreen,
+  DeliveryScreen,
 } from "./screens";
 import { TailwindProvider } from "tailwindcss-react-native";
 import TabNavigator from "./navigation/TabNavigator";
@@ -62,6 +63,13 @@ export default function App() {
                 }}
                 name="BasketScreen"
                 component={BasketScreen}
+              />
+              <Stack.Screen
+                options={{
+                  animation: "fade_from_bottom",
+                }}
+                name="DeliveryScreen"
+                component={DeliveryScreen}
               />
             </Stack.Group>
           </Stack.Navigator>
