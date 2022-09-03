@@ -25,7 +25,7 @@ import HeaderImageScrollView, {
 import Animated from "react-native-reanimated";
 import BottomSheet from "reanimated-bottom-sheet";
 import { useSelector } from "react-redux";
-import { selectBasketItems, addToBasket } from "../../redux/slice/BasketSlice";
+import { selectBasketItems, clearBasket } from "../../redux/slice/BasketSlice";
 import { useDispatch } from "react-redux";
 import { truncate, calculateDiscountPrice } from "../../utils";
 import { ErrorCard, Headline, MenuItem, BasketCard } from "../../components";
@@ -39,6 +39,7 @@ const RestaurantDetail = ({ route }) => {
   const navigation = useNavigation();
 
   const navigateBack = () => {
+    dispatch(clearBasket());
     navigation.goBack();
   };
 
