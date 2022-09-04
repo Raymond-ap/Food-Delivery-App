@@ -6,7 +6,7 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useState, useMemo, useEffect} from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
@@ -20,8 +20,6 @@ import {
   selectBasketItems,
   selectBasketTotal,
 } from "../../redux/slice/BasketSlice";
-import { useMemo } from "react";
-import { useState } from "react";
 
 export default function BasketScreen() {
   const dispatch = useDispatch();
@@ -31,7 +29,7 @@ export default function BasketScreen() {
   const basketTotal = useSelector(selectBasketTotal);
   const [uniqueBaskerItems, setUniqueBasketItems] = useState([]);
 
-  useMemo(() => {
+  useEffect(() => {
     const uniqueItems = basketItems.reduce((results, item) => {
       (results[item.id] = results[item.id] || []).push(item);
       return results;
